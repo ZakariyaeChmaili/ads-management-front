@@ -1,0 +1,49 @@
+<p>partner-list works!</p>
+<p>Table is just a mapping of objects to table rows with <code>&#64;for</code></p>
+
+<div class="container">
+  <div class="row justify-content-end">
+    <div class="col col-auto">
+      <button (click)="openPartnerDialog()" class="btn btn-primary">
+        Add
+      </button>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col">
+
+      <ng-container *ngIf="partnersState$ | async as partnersState">
+        <div *ngIf="partnersState.isLoading">
+          <div class="spinner-border" role="status"></div>
+        </div>
+        <ng-container *ngIf="partnersState.error !=null ">
+          <span>test</span>
+          <div class="alert alert-primary" role="alert">
+            {{ partnersState.error | json }}
+          </div>
+        </ng-container>
+
+        <table *ngIf="partnersState.partners.length>0" class="table table-striped">
+          <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Url</th>
+            <th scope="col">Logo</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let partner of partnersState.partners;">
+            <td>{{ partner.id }}</td>
+            <td>{{ partner.name }}</td>
+            <td>{{ partner.url }}</td>
+            <td>{{ partner.logo }}</td>
+          </tr>
+          </tbody>
+        </table>
+      </ng-container>
+
+    </div>
+  </div>
+</div>
